@@ -1,0 +1,315 @@
+<div class="employee-detail">
+    <div *ngIf="selectedEmployee; else noSelection" class="detail-content">
+      
+      <!-- ✅ Employee Header with Avatar and Stats -->
+      <div class="detail-header">
+        <div class="employee-profile">
+          <div class="profile-avatar">
+            <img 
+              [src]="employeeAvatarUrl"
+              [alt]="selectedEmployee.firstName + ' ' + selectedEmployee.lastName"
+              class="avatar-image">
+            <div class="avatar-status" 
+                 [class.avatar-status--online]="selectedEmployee.isOnline">
+            </div>
+          </div>
+          
+          <div class="profile-info">
+            <h2 class="profile-name">
+              {{ selectedEmployee.firstName }} {{ selectedEmployee.lastName }}
+            </h2>
+            <p class="profile-position">{{ selectedEmployee.position }}</p>
+          </div>
+        </div>
+  
+        <!-- ✅ Stats Cards -->
+        <div class="stats-container">
+          <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-info">
+              <span class="stat-label">CDI</span>
+              <span class="stat-value">N0011,28</span>
+              <span class="stat-trend">+6.13% Sur l'objectif mensuel</span>
+            </div>
+        
+          </div>
+        </div>
+      </div>
+  
+
+      <nav class="detail-tabs">
+        <div class="tabs-container">
+          <button 
+            *ngFor="let tab of tabs; trackBy: trackByTabId"
+            class="tab-button"
+            [class.tab-button--active]="isTabActive(tab.id)"
+            (click)="onTabSelect(tab.id)"
+            type="button">
+            <span class="tab-label">{{ tab.label }}</span>
+            <span *ngIf="tab.count" class="tab-count">{{ tab.count }}</span>
+          </button>
+        </div>
+      </nav>
+  
+      <!-- ✅ Tab Content -->
+      <div class="detail-body">
+        <div *ngIf="activeTab === 'infos-personnelles'" class="tab-content">
+          
+          <!-- ✅ Identity Section -->
+          <section class="info-section">
+            <div class="section-header">
+              <h3 class="section-title">
+                <span class="section-icon">👤</span>
+                Identité
+              </h3>
+              <button class="edit-btn" (click)="onEditInfo()" type="button">
+                <span class="edit-icon">✏️</span>
+                Modifier les informations
+              </button>
+            </div>
+            
+            <div class="info-grid">
+              <div class="info-row">
+                <span class="info-label">Nom</span>
+                <span class="info-value">{{ selectedEmployee.lastName }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Nom</span>
+                <span class="info-value">{{ selectedEmployee.firstName }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Prénom</span>
+                <span class="info-value">{{ selectedEmployee.lastName }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Nom</span>
+                <span class="info-value">{{ selectedEmployee.firstName }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Date de naissance</span>
+                <span class="info-value">{{ selectedEmployee.birthDate }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Nom</span>
+                <span class="info-value">{{ selectedEmployee.firstName }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Ville de naissance</span>
+                <span class="info-value">{{ selectedEmployee.city }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Nom</span>
+                <span class="info-value">{{ selectedEmployee.firstName }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Code postal de naissance</span>
+                <span class="info-value">{{ selectedEmployee.postalCode }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Nom</span>
+                <span class="info-value">{{ selectedEmployee.firstName }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Pays de naissance</span>
+                <span class="info-value">{{ selectedEmployee.country }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Nom</span>
+                <span class="info-value">{{ selectedEmployee.firstName }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Sexe</span>
+                <span class="info-value">{{ selectedEmployee.gender }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Nom</span>
+                <span class="info-value">{{ selectedEmployee.firstName }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Situation de handicap</span>
+                <span class="info-value">{{ selectedEmployee.disability ? 'Oui' : 'Non' }}</span>
+              </div>
+            </div>
+          </section>
+  
+          <section class="info-section">
+            <div class="section-header">
+              <h3 class="section-title">
+                <span class="section-icon">🔢</span>
+                Matricules
+              </h3>
+              <button class="edit-btn" (click)="onEditInfo()" type="button">
+                <span class="edit-icon">✏️</span>
+              </button>
+            </div>
+            
+            <div class="matricules-grid">
+              <div *ngFor="let matricule of selectedEmployee.matricules; let i = index" 
+                   class="info-row">
+                <span class="info-label">Nom</span>
+                <span class="info-value">{{ matricule }}</span>
+              </div>
+            </div>
+          </section>
+  
+          <!-- ✅ Authorization Section -->
+          <section class="info-section">
+            <div class="section-header">
+              <h3 class="section-title">
+                <span class="section-icon">🔐</span>
+                Autorisation de travail
+              </h3>
+              <button class="edit-btn" (click)="onEditAuth()" type="button">
+                <span class="edit-icon">✏️</span>
+              </button>
+            </div>
+            
+            <div class="auth-grid">
+              <div *ngFor="let auth of selectedEmployee.authorizations; let i = index" 
+                   class="info-row">
+                <span class="info-label">Nom</span>
+                <span class="info-value">{{ auth }}</span>
+              </div>
+            </div>
+          </section>
+  
+          <!-- ✅ Coordinates Section -->
+          <section class="info-section">
+            <div class="section-header">
+              <h3 class="section-title">
+                <span class="section-icon">📍</span>
+                Coordonnées
+              </h3>
+              <button class="edit-btn" (click)="onEditInfo()" type="button">
+                <span class="edit-icon">✏️</span>
+              </button>
+            </div>
+            
+            <div class="coord-grid">
+              <div *ngFor="let coord of selectedEmployee.coordinates; let i = index" 
+                   class="info-row">
+                <span class="info-label">Nom</span>
+                <span class="info-value">{{ coord }}</span>
+              </div>
+            </div>
+          </section>
+  
+          <!-- ✅ Diplomas Section -->
+          <section class="info-section">
+            <div class="section-header">
+              <h3 class="section-title">
+                <span class="section-icon">🎓</span>
+                Diplômes
+              </h3>
+              <button class="edit-btn" (click)="onEditInfo()" type="button">
+                <span class="edit-icon">✏️</span>
+              </button>
+            </div>
+            
+            <div class="diplomas-content">
+              <p *ngIf="selectedEmployee.diplomas.length === 0" class="empty-state">
+                Aucun diplôme enregistré
+              </p>
+              <div *ngFor="let diploma of selectedEmployee.diplomas" class="diploma-item">
+                {{ diploma }}
+              </div>
+            </div>
+          </section>
+  
+        </div>
+  
+        <!-- ✅ Contrats Tab -->
+        <div *ngIf="activeTab === 'contrats'" class="tab-content">
+          <div class="coming-soon">
+            <h3>Contrats</h3>
+            <p>Liste des contrats de l'employé</p>
+            <div class="placeholder-content">
+              <div class="placeholder-card">
+                <h4>CDI - Temps plein</h4>
+                <p>Date de début : 01/01/2023</p>
+                <p>Statut : Actif</p>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- ✅ Qualifications Tab -->
+        <div *ngIf="activeTab === 'qualifications'" class="tab-content">
+          <div class="coming-soon">
+            <h3>Qualifications</h3>
+            <p>Compétences et certifications</p>
+            <div class="placeholder-content">
+              <div class="skills-grid">
+                <div class="skill-item">Cuisine française</div>
+                <div class="skill-item">Management d'équipe</div>
+                <div class="skill-item">HACCP</div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+
+        <div *ngIf="activeTab === 'absences-conges'" class="tab-content">
+          <div class="coming-soon">
+            <h3>Absences & Congés</h3>
+            <p>Historique des absences et demandes de congés</p>
+            <div class="placeholder-content">
+              <div class="absence-list">
+                <div class="absence-item">
+                  <span class="absence-type">Congé payé</span>
+                  <span class="absence-date">15-20 Mars 2024</span>
+                  <span class="absence-status absence-status--approved">Approuvé</span>
+                </div>
+                <div class="absence-item">
+                  <span class="absence-type">Maladie</span>
+                  <span class="absence-date">03 Févr. 2024</span>
+                  <span class="absence-status absence-status--justified">Justifié</span>
+                </div>
+                <div class="absence-item">
+                  <span class="absence-type">Congé payé</span>
+                  <span class="absence-date">20-24 Déc. 2023</span>
+                  <span class="absence-status absence-status--approved">Approuvé</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div *ngIf="activeTab === 'indisponibilites'" class="tab-content">
+          <div class="coming-soon">
+            <h3>Indisponibilités</h3>
+            <p>Périodes d'indisponibilité planifiées</p>
+          </div>
+        </div>
+  
+        <div *ngIf="activeTab === 'discipline'" class="tab-content">
+          <div class="coming-soon">
+            <h3>Discipline</h3>
+            <p>Historique disciplinaire</p>
+          </div>
+        </div>
+  
+        <div *ngIf="activeTab === 'rapports'" class="tab-content">
+          <div class="coming-soon">
+            <h3>Rapports</h3>
+            <p>Rapports et évaluations</p>
+          </div>
+        </div>
+  
+      </div>
+  
+    </div>
+  
+    <!-- ✅ Empty State -->
+    <ng-template #noSelection>
+      <div class="empty-state-container">
+        <div class="empty-state">
+          <div class="empty-icon">👤</div>
+          <h3 class="empty-title">Aucun employé sélectionné</h3>
+          <p class="empty-description">
+            Sélectionnez un employé dans la liste pour voir ses détails
+          </p>
+        </div>
+      </div>
+    </ng-template>
+  </div>

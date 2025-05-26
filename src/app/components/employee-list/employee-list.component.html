@@ -1,0 +1,71 @@
+<div class="employee-list">
+    <div class="list-header">
+      <div class="search-container">
+      
+        <input 
+          class="search-input"
+          type="text"
+          placeholder="Nom, matricule..."
+          [value]="searchTerm"
+          (input)="onSearchChange($event)">
+        <button class="filter-btn" type="button">
+          <span class="filter-icon">☰</span>
+        </button>
+      </div>
+    </div>
+  
+    <div class="employee-scroll-container">
+      <div *ngFor="let group of employeeGroups" class="employee-group">
+        
+        <div class="group-header">
+          <button 
+            class="group-toggle"
+            (click)="toggleGroup(group.id)"
+            type="button">
+            <span class="group-arrow" [class.group-arrow--expanded]="group.isExpanded">▼</span>
+            <span class="group-label">{{ group.label }}</span>
+            <span class="group-count">({{ group.count }})</span>
+          </button>
+          
+          <button 
+            class="group-menu"
+            (click)="onGroupMenuClick(group.id)"
+            type="button">
+            <span class="menu-dots">⋯</span>
+          </button>
+        </div>
+  
+      
+        <div *ngIf="group.isExpanded" class="group-content">
+          <div 
+            *ngFor="let employee of group.employees; trackBy: trackByEmployeeId"
+            class="employee-card"
+            [class.employee-card--selected]="isEmployeeSelected(employee)"
+            (click)="onEmployeeSelect(employee)">
+            
+            <div class="selection-bar" *ngIf="isEmployeeSelected(employee)"></div>
+            
+            <div class="employee-content">
+              <div class="employee-avatar-container">
+                <img 
+                  [src]="getEmployeeAvatarUrl(employee)"
+                  [alt]="employee.firstName + ' ' + employee.lastName"
+                  class="employee-avatar">
+                <div 
+                  class="status-dot"
+                  [class.status-dot--online]="employee.isOnline">
+                </div>
+              </div>
+  
+              <div class="employee-info">
+                <h3 class="employee-name">
+                  {{ employee.firstName }} {{ employee.lastName }}
+                </h3>
+                <p class="employee-position">{{ employee.position }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

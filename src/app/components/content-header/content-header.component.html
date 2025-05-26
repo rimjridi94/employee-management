@@ -1,0 +1,78 @@
+<header class="content-header">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol class="breadcrumb-list">
+        <li 
+          *ngFor="let item of breadcrumbs; let last = last" 
+          class="breadcrumb-item"
+          [class.breadcrumb-item--active]="last">
+          <a 
+            *ngIf="item.route && !last" 
+            [href]="item.route" 
+            class="breadcrumb-link">
+            {{ item.label }}
+          </a>
+          <span *ngIf="!item.route || last" class="breadcrumb-text">
+            {{ item.label }}
+          </span>
+          <span *ngIf="!last" class="breadcrumb-separator">></span>
+        </li>
+      </ol>
+    </nav>
+  
+    <div class="title-section">
+      <div class="title-left">
+        <div class="title-main">
+          <div class="title-icon">
+            <img [src]="getIconUrl()" [alt]="'Icône ' + title" class="icon-img">
+          </div>
+          <h1 class="title-text">{{ title }}</h1>
+        </div>
+  
+        
+      </div>
+  
+      <div class="title-right">
+        <div class="employee-avatars">
+          <div 
+            *ngFor="let employee of visibleEmployees; let i = index" 
+            class="avatar-container"
+            [style.z-index]="visibleEmployees.length - i"
+            [title]="employee.name">
+            <img 
+              [src]="employee.avatar" 
+              [alt]="employee.name"
+              class="employee-avatar">
+          </div>
+        
+          <div *ngIf="remainingCount > 0" class="avatar-container remaining-count" [style.z-index]="0" [title]="'+' + remainingCount + ' employés supplémentaires'">
+            {{ remainingCount }}
+          </div>
+        </div>
+        
+        <button 
+          class="add-btn"
+          (click)="onAddEmployee()"
+          type="button">
+          <span class="add-icon">+</span>
+          <span class="add-text">Ajouter un employé</span>
+        </button>
+  
+        <div class="view-options">
+          <button 
+            class="view-btn"
+            (click)="onGridView()"
+            type="button"
+            aria-label="Vue grille">
+            <span class="view-icon">⊞</span>
+          </button>
+          <button 
+            class="view-btn"
+            (click)="onListView()"
+            type="button"
+            aria-label="Vue liste">
+            <span class="view-icon">☰</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>

@@ -1,6 +1,4 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
-# Compiled output
+# Angular
 /dist
 /tmp
 /out-tsc
@@ -11,7 +9,7 @@
 npm-debug.log
 yarn-error.log
 
-# IDEs and editors
+# IDEs
 .idea/
 .project
 .classpath
@@ -40,3 +38,8 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.production

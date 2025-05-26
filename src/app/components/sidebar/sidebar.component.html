@@ -1,0 +1,74 @@
+<aside class="sidebar">
+    <nav class="sidebar__nav" role="navigation" aria-label="Navigation principale">
+      <ul class="menu-list" role="list">
+        <li 
+          *ngFor="let item of menuItems; trackBy: trackByItemId" 
+          class="menu-item"
+          [class.menu-item--expanded]="isExpanded(item.id)"
+          role="listitem">
+          
+          <button 
+            class="menu-button"
+            [class.menu-button--active]="isActive(item.id)"  
+            [class.menu-button--expandable]="item.children"
+            (click)="onMenuItemClick(item)"
+            [attr.aria-expanded]="item.children ? isExpanded(item.id) : null"
+            [attr.aria-controls]="item.children ? 'submenu-' + item.id : null"
+            type="button">
+            
+            <div class="menu-button__content">
+              <div class="menu-button__left">
+                <img 
+                  [src]="getIconUrl(item.iconName)" 
+                  [alt]="'Icône ' + item.label"
+                  class="menu-icon"
+                  loading="lazy">
+                <span class="menu-label">{{ item.label }}</span>
+              </div>
+              
+              <div class="menu-button__right">
+                <span 
+                  *ngIf="item.count" 
+                  class="menu-count"
+                  [attr.aria-label]="item.count + ' éléments'">
+                  {{ item.count }}
+                </span>
+                <svg 
+                  *ngIf="item.children" 
+                  class="expand-icon"
+                  [class.expand-icon--rotated]="isExpanded(item.id)"
+                  width="12" 
+                  height="12" 
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true">
+                  <path d="M6 4L2 8L10 8L6 4Z" fill="currentColor"/>
+                </svg>
+              </div>
+            </div>
+          </button>
+  
+          <ul 
+            *ngIf="item.children && isExpanded(item.id)" 
+            class="submenu-list"
+            [id]="'submenu-' + item.id"
+            role="list">
+            <li 
+              *ngFor="let child of item.children; trackBy: trackByChildId"
+              class="submenu-item"
+              role="listitem">
+              <button 
+                class="submenu-button"
+                [class.submenu-button--active]="isActive(child.id)"
+                (click)="selectSubMenuItem(child.id, $event)"  
+                [attr.aria-current]="isActive(child.id) ? 'page' : null"
+                type="button">
+                {{ child.label }}
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </aside>

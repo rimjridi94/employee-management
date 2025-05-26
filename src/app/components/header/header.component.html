@@ -1,0 +1,54 @@
+<header class="header">
+
+  <div class="header__left">
+    <div class="header__logo">
+      <img [src]="logoUrl" alt="Logo" class="logo-img">
+    </div>
+    <button 
+      class="hamburger-btn"
+      (click)="toggleMobileMenu()"
+      type="button"
+      aria-label="Toggle navigation">
+      <span class="hamburger-icon">☰</span>
+    </button>
+
+    <button class="header__company-selector" (click)="onCompanySelect()">
+      
+      <span class="company-name">{{ companyName }}</span>
+      <img [src]="dropdownIconUrl" alt="" class="dropdown-icon">
+    </button>
+  </div>
+
+  <div class="header__right">
+    <div class="header__search">
+      <div class="search-container">
+        <img [src]="searchIconUrl" alt="" class="search-icon">
+        <input 
+          class="search-input"
+          type="text"
+          placeholder="Recherche rapide"
+          [value]="searchValue"
+          (input)="onSearchChange($any($event.target).value)">
+        <kbd class="search-shortcut">⌘/alt P</kbd>
+      </div>
+    </div>
+
+    <div class="header__actions">
+      <button class="action-btn" type="button">
+        <img [src]="helpIconUrl" alt="Aide" class="help-icon">
+      </button>
+
+      <button class="action-btn action-btn--notification" type="button">
+        <img [src]="notificationIconUrl" alt="Notifications" class="notification-icon">
+        <span class="notification-badge" *ngIf="notificationCount > 0">
+          {{ notificationCount }}
+        </span>
+      </button>
+
+      <button class="user-menu" type="button">
+        <img [src]="userAvatarUrl" alt="Avatar" class="user-avatar">
+        <img [src]="dropdownIconUrl" alt="" class="dropdown-icon">
+      </button>
+    </div>
+  </div>
+</header>

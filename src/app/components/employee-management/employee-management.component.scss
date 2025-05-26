@@ -1,0 +1,70 @@
+.employee-management {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-background-secondary);
+}
+
+// ✅ Workspace en 2 colonnes
+.employee-workspace {
+  flex: 1;
+  display: flex;
+  min-height: 0; // Important pour le scroll
+  background: var(--color-background-secondary);
+}
+
+// ✅ Partie gauche : Liste (largeur fixe)
+.workspace-left {
+  width: 25%
+  ; // Largeur fixe pour la liste
+  flex-shrink: 0; // Ne pas rétrécir
+  background: var(--color-background);
+  border-right: 1px solid var(--color-border);
+  
+  app-employee-list {
+    height: 100%;
+    display: block;
+  }
+}
+
+// ✅ Partie droite : Détails (prend le reste)
+.workspace-right {
+  flex: 1; // Prend tout l'espace restant
+  min-width: 0; // Important pour éviter l'overflow
+  background: var(--color-background);
+  
+  app-employee-detail {
+    height: 100%;
+    display: block;
+  }
+}
+
+// ✅ Responsive
+@media (max-width: 1200px) {
+  .workspace-left {
+    width: 350px; // Plus étroit sur écran moyen
+  }
+}
+
+@media (max-width: 1024px) {
+  .workspace-left {
+    width: 320px; // Plus étroit sur tablette
+  }
+}
+
+@media (max-width: 768px) {
+  .employee-workspace {
+    flex-direction: column; // Stack vertical sur mobile
+  }
+  
+  .workspace-left {
+    width: 100%; // Pleine largeur sur mobile
+    height: 40vh; // Hauteur fixe sur mobile
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .workspace-right {
+    flex: 1; // Prend le reste de la hauteur
+  }
+}
