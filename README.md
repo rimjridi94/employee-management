@@ -22,7 +22,7 @@ Une application moderne de gestion des employés développée avec Angular 17+.
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/USERNAME/employee-management.git
+git clone https://github.com/rimjridi94/employee-management.git
 
 # Installer les dépendances
 cd employee-management
